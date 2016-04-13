@@ -25,7 +25,7 @@ class ConfigWriter(object):
             conf = {}
         return conf
     
-    def add_key(self,key,value):
+    def set(self,key,value):
         self.config[key] = value
         self.write()
         
