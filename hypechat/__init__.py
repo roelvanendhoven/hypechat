@@ -2,10 +2,10 @@ import urllib2, json, urllib, sys
 from configwriter import ConfigWriter
 
 data = sys.argv
-config = ConfigWriter()
 if len(data) > 1:
     if data[1] is not None:
-        config.reset()
+        ConfigWriter().reset()
+config = ConfigWriter()
 
 token = config.get("Oauth2token")
 if token is None:
