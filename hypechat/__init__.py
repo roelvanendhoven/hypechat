@@ -3,17 +3,19 @@ from configwriter import ConfigWriter
 
 data = sys.argv
 if len(data) > 1:
-    if data[1] is not None:
+    if 'reset' in data:
         ConfigWriter().reset()
 config = ConfigWriter()
 
-token = config.get("Oauth2token")
-if token is None:
+if config.has("Oauth2token"):
+    token = config.get("Oauth2token")
+else:
     token = raw_input("OAut2htoken:")
     config.set("Oauth2token", token)
 
-roomKey = config.get("roomkey")
-if roomKey is None:
+if config.has("roomkey"):
+    roomkey = config.get("roomkey")
+else:
     roomKey = raw_input("Roomkey:")
     config.set("roomkey",roomKey)
 

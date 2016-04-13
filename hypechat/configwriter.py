@@ -42,4 +42,7 @@ class ConfigWriter(object):
             f.write(json.dumps(self.config))
     
     def reset(self):
-        os.remove(self.default_path + '/' + self.config_name)
+        try:
+            os.remove(self.default_path + '/' + self.config_name)
+        except OSError:
+            self.logger.info('no config file currently present')
