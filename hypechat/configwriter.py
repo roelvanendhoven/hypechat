@@ -29,10 +29,16 @@ class ConfigWriter(object):
         self.config[key] = value
         self.write()
         
+    def get(self,key):
+        if key in self.config:
+            return key
+
+    def had(self,key):
+        return key in self.config
+
     def write(self):
         with open(self.default_path + '/' +  self.config_name,'w+') as f:
             self.logger.debug('Config written to file')
             f.write(json.dumps(self.config))
 
 
-writer = ConfigWriter().add_key('meme','nice')
