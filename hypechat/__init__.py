@@ -1,6 +1,8 @@
 import urllib2, json, urllib
+from config import colorlist
+import localconfig
 
-token = ''
+token = localconfig.Oauthkey 
 
 protocol = 'https' 
 api_url = 'api.hipchat.com'
@@ -9,10 +11,11 @@ room_url = 'https://api.hipchat.com/v2/room/2489868'
 
 full_url = protocol + '://' + api_url
 
-def send_message(message):
+def send_message(message,color):
+    
     request = urllib2.Request(room_url+'/notification')
     request.add_header('Authorization', 'Bearer ' + token)
-    data = {'message':message, 'color':'yellow'}
+    data = {'message':message, 'color':color,'notify':True}
     request.add_data(urllib.urlencode(data))
     try:
         response = urllib2.urlopen(request)
@@ -33,6 +36,7 @@ def get_room(name):
 
 #print get_room('Random')
 mess = ''
+color = raw_input('choose your color:')
 while mess != 'quit':
     mess = raw_input('message:')
-    send_message(mess)
+    send_message(mess,color)
