@@ -40,5 +40,6 @@ class ConfigWriter(object):
         with open(self.default_path + '/' +  self.config_name,'w+') as f:
             self.logger.debug('Config written to file')
             f.write(json.dumps(self.config))
-
-
+    
+    def reset(self):
+        os.remove(self.default_path + '/' + self.config_name)
