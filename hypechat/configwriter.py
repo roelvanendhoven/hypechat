@@ -6,7 +6,7 @@ class ConfigWriter(object):
         FORMAT = '%(asctime)-15s %(message)s'
         logging.basicConfig(format=FORMAT)
         self.logger = logging.getLogger('configwriter')
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.NOTSET)
         self.logger.addHandler(logging.FileHandler('log'))
         self.default_path = os.path.expanduser('~') + '/.hypechat'
         self.config_name = 'config.json'
@@ -18,7 +18,10 @@ class ConfigWriter(object):
             self.logger.debug('Config loaded')
         except IOError:
             self.logger.info('Config not found, resorting to backup')
-            #os.makedirs(self.config_location)
+            try:
+                os.makedirs(self.default_path)
+            except OSError:
+                self.logger.info('Config directory already exists')
             conf = {}
         return conf
     
