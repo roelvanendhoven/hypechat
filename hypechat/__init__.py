@@ -15,13 +15,12 @@ def send_message(message,color):
     
     request = urllib2.Request(room_url+'/notification')
     request.add_header('Authorization', 'Bearer ' + token)
-    data = {'message':message, 'color':color,'notify':True}
+    data = {'message' : message, 'color': color,'message_format': 'text','notify': True}
     request.add_data(urllib.urlencode(data))
     try:
         response = urllib2.urlopen(request)
     except urllib2.HTTPError as e:
         print e.read()
-
 
 def get_rooms():
     request = urllib2.Request(url=full_url+'/v2/room')
