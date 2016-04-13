@@ -1,6 +1,6 @@
 import urllib2, json, urllib
 
-token = 'Gn9Xc1c9dQY5siGTplI9xOOXThayPEJg6XdWBAfk'
+token = ''
 
 protocol = 'https' 
 api_url = 'api.hipchat.com'
