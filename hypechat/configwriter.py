@@ -31,9 +31,9 @@ class ConfigWriter(object):
         
     def get(self,key):
         if key in self.config:
-            return key
+            return self.config[key]
 
-    def had(self,key):
+    def has(self,key):
         return key in self.config
 
     def write(self):

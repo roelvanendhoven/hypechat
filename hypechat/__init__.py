@@ -1,12 +1,12 @@
 import urllib2, json, urllib
-from config import colorlist
-import localconfig
+from configwriter import ConfigWriter
 
-token = localconfig.Oauthkey 
-
+token = ""
+config = ConfigWriter().get("meme")
 protocol = 'https' 
 api_url = 'api.hipchat.com'
 
+print config
 room_url = 'https://api.hipchat.com/v2/room/2489868'
 
 full_url = protocol + '://' + api_url
