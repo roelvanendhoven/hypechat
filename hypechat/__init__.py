@@ -70,7 +70,7 @@ if config.has("roomkey"):
     roomkey = config.get("roomkey")
 else:
     roomkey = raw_input("Roomkey:")
-    config.set("roomkey",roomKey)
+    config.set("roomkey",roomkey)
 
 protocol = 'https' 
 api_url = 'api.hipchat.com'
