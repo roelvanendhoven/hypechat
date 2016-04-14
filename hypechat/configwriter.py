@@ -25,7 +25,7 @@ class ConfigWriter(object):
             conf = {}
         return conf
     
-    def add_key(self,key,value):
+    def set(self,key,value):
         self.config[key] = value
         self.write()
         
@@ -40,5 +40,9 @@ class ConfigWriter(object):
         with open(self.default_path + '/' +  self.config_name,'w+') as f:
             self.logger.debug('Config written to file')
             f.write(json.dumps(self.config))
-
-
+    
+    def reset(self):
+        try:
+            os.remove(self.default_path + '/' + self.config_name)
+        except OSError:
+            self.logger.info('no config file currently present')

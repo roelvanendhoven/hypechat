@@ -1,18 +1,18 @@
-import urllib2, json, urllib
+import urllib2, json, urllib, sys, getopt
 from configwriter import ConfigWriter
 
-token = ""
-config = ConfigWriter().get("meme")
-protocol = 'https' 
-api_url = 'api.hipchat.com'
 
-print config
-room_url = 'https://api.hipchat.com/v2/room/2489868'
+#Read initial arguments
+try:
+    opts, args = getopt.getopt(sys.argv[1:],"hr",["help","reset"])
+except getopt.GetoptError:
+    usage()
+    sys.exit(2)
+config = ConfigWriter()
 
-full_url = protocol + '://' + api_url
 
-def send_message(message,color):
-    
+#Sends a message to the chat
+def send_message(message,color):   
     request = urllib2.Request(room_url+'/notification')
     request.add_header('Authorization', 'Bearer ' + token)
     data = {'message' : message, 'color': color,'message_format': 'text','notify': True}
@@ -22,16 +22,63 @@ def send_message(message,color):
     except urllib2.HTTPError as e:
         print e.read()
 
+
 def get_rooms():
     request = urllib2.Request(url=full_url+'/v2/room')
     request.add_header('Authorization', 'Bearer ' + token)
     response = urllib2.urlopen(request)
     return json.loads( response.read() )['items']
 
+
 def get_room(name):
     for room in get_rooms():
         if room['name'] == name:
             return room
+
+
+def usage():
+    print "Commands:"
+    print "-h, -help: Display this message"
+    print "-r --reset: Reset user settings"
+    sys.exit()
+
+
+#checks the inital arguments                                                                    
+try:
+    opts, args = getopt.getopt(sys.argv[1:],"hr",["help","reset"])                           
+except getopt.GetoptError:                                                                   
+    usage()
+    sys.exit(2)                                                                              
+
+#ConfigWriter object
+config = ConfigWriter()
+
+for opt, arg in opts:
+    if opt in ('-h','--help'):
+        usage()
+        sys.exit()
+    elif opt in ('-r','reset'):
+        config.reset()
+
+if config.has("Oauth2token"):
+    token = config.get("Oauth2token")
+else:
+    token = raw_input("OAut2htoken:")
+    config.set("Oauth2token", token)
+
+if config.has("roomkey"):
+    roomkey = config.get("roomkey")
+else:
+    roomkey = raw_input("Roomkey:")
+    config.set("roomkey",roomkey)
+
+protocol = 'https' 
+api_url = 'api.hipchat.com'
+
+print config
+room_url = 'https://api.hipchat.com/v2/room/'+roomkey
+
+full_url = protocol + '://' + api_url
 
 #print get_room('Random')
 mess = ''
