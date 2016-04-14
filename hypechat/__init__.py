@@ -16,7 +16,7 @@ else:
 if config.has("roomkey"):
     roomkey = config.get("roomkey")
 else:
-    roomKey = raw_input("Roomkey:")
+    roomkey = raw_input("Roomkey:")
     config.set("roomkey",roomKey)
 
 
@@ -26,7 +26,7 @@ protocol = 'https'
 api_url = 'api.hipchat.com'
 
 print config
-room_url = 'https://api.hipchat.com/v2/room/'+roomKey
+room_url = 'https://api.hipchat.com/v2/room/'+roomkey
 
 full_url = protocol + '://' + api_url
 
