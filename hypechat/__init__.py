@@ -4,9 +4,9 @@ from configwriter import ConfigWriter
 
 #Read initial arguments
 try:
-    opts, args = getopt.getopt(sys.argv[1:],"hr",["help","reset"])
+    opts, args = getopt.getopt(sys.argv[1:],"hrd:",["help","reset"])
 except getopt.GetoptError:
-    usage()
+    print 'Error in arguments, see -h or --help for information'
     sys.exit(2)
 config = ConfigWriter()
 
@@ -40,12 +40,14 @@ def usage():
     print "Commands:"
     print "-h, -help: Display this message"
     print "-r --reset: Reset user settings"
+    print "-d: Delete a specific user setting"
+    print "An example would be: -d Oauth2token, to delete the token "
     sys.exit()
 
 
 #checks the inital arguments                                                                    
 try:
-    opts, args = getopt.getopt(sys.argv[1:],"hr",["help","reset"])                           
+    opts, args = getopt.getopt(sys.argv[1:],"hrd:",["help","reset"])                           
 except getopt.GetoptError:                                                                   
     usage()
     sys.exit(2)                                                                              
@@ -59,6 +61,8 @@ for opt, arg in opts:
         sys.exit()
     elif opt in ('-r','reset'):
         config.reset()
+    elif opt in ('-d','--delete'):
+        config.remove(arg)
 
 if config.has("Oauth2token"):
     token = config.get("Oauth2token")
@@ -66,11 +70,11 @@ else:
     token = raw_input("OAut2htoken:")
     config.set("Oauth2token", token)
 
-if config.has("roomkey"):
-    roomkey = config.get("roomkey")
+if config.has("Roomkey"):
+    roomkey = config.get("Roomkey")
 else:
     roomkey = raw_input("Roomkey:")
-    config.set("roomkey",roomkey)
+    config.set("Roomkey",roomkey)
 
 protocol = 'https' 
 api_url = 'api.hipchat.com'

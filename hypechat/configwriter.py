@@ -36,6 +36,11 @@ class ConfigWriter(object):
     def has(self,key):
         return key in self.config
 
+    def remove(self,key):
+        if key in self.config:
+             del self.config[key]
+
+
     def write(self):
         with open(self.default_path + '/' +  self.config_name,'w+') as f:
             self.logger.debug('Config written to file')
